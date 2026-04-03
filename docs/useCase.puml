@@ -33,7 +33,7 @@ Visitor -- UC_CinemaByKeyword
 Visitor -- UC_ViewCinemaMovies
 Visitor -- UC_ViewScreenings
 
-AuthUser -- UC_login
+Visitor -- UC_login
 AuthUser -- UC_SeatBooking
 
 Admin -- UC_ManageCities
