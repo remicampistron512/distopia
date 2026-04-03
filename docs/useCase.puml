@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+
+actor "Visiteur" as Visitor
+actor "Utilisateur connecté" as AuthUser
+actor "Administrateur" as Admin
+
+Admin --|> AuthUser
+AuthUser --|> Visitor
+
+rectangle "Distopia" {
+
+  usecase "Consulter les villes" as UC_ViewCities
+  usecase "Afficher les cinémas d’une ville" as UC_ViewCityCinemas
+  usecase "Rechercher un cinéma par mot-clé" as UC_CinemaByKeyword
+  usecase "Afficher les films d’un cinéma" as UC_ViewCinemaMovies
+  usecase "Afficher les séances d’un film" as UC_ViewScreenings
+
+  usecase "Se connecter" as UC_login
+  usecase "Réserver une place" as UC_SeatBooking
+
+  usecase "Gérer les villes" as UC_ManageCities
+
+  usecase "Gérer les cinémas" as UC_ManageCinemas
+
+  usecase "Gérer les films" as UC_ManageMovies
+
+}
+
+Visitor -- UC_ViewCities
+Visitor -- UC_ViewCityCinemas
+Visitor -- UC_CinemaByKeyword
+Visitor -- UC_ViewCinemaMovies
+Visitor -- UC_ViewScreenings
+
+AuthUser -- UC_login
+AuthUser -- UC_SeatBooking
+
+Admin -- UC_ManageCities
+Admin -- UC_ManageCinemas
+Admin -- UC_ManageMovies
+
+UC_SeatBooking .> UC_login : <<include>>
+
+
+@enduml

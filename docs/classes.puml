@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+City "1" -- "0..*" Cinema : contains
+Cinema "1" -- "0..*" Showing : has
+Movie "1" -- "0..*" Showing : concerns
+User "1" -- "0..*" Booking : makes
+Showing "1" -- "0..*" Booking : receives
+
+class City {
+  - long id
+  - String name
+}
+
+class Cinema {
+ - long id
+ - String name
+ - String address
+}
+
+class Movie {
+  - long id
+  - String name
+  - int year
+  - int duration
+}
+
+class Showing {
+  - long id
+  - LocalDateTime startDateTime
+}
+
+class Booking {
+  - long id
+   - int numberOfSeats
+}
+
+class User {
+  - long id
+  - String username
+  - String password
+  - String firstName
+  - String lastName
+}
+@enduml
