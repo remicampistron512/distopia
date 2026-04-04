@@ -1,6 +1,4 @@
 @startuml
-'https://plantuml.com/class-diagram
-
 
 City "1" -- "0..*" Cinema : contains
 Cinema "1" -- "0..*" Showing : has
@@ -14,26 +12,38 @@ class City {
 }
 
 class Cinema {
- - long id
- - String name
- - String address
+  - long id
+  - String name
+  - String address
+  - double communityRating
 }
 
 class Movie {
   - long id
-  - String name
+  - String title
   - int year
   - int duration
+  - LocalDate releaseDate
+  - double criticsRating
+  - double communityRating
+  - String genre
+  - String director
+  - List<String> actors
 }
 
 class Showing {
   - long id
   - LocalDateTime startDateTime
+  - BigDecimal price
+  - int availableSeats
 }
 
 class Booking {
   - long id
-   - int numberOfSeats
+  - int numberOfSeats
+  - LocalDateTime bookedAt
+  - BigDecimal totalPrice
+  - String status
 }
 
 class User {
@@ -42,5 +52,7 @@ class User {
   - String password
   - String firstName
   - String lastName
+  - String role
 }
+
 @enduml
