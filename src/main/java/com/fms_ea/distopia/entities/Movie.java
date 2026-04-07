@@ -25,6 +25,7 @@ public class Movie {
   private double communityRating;
   private String genre;
   private String director;
+  private String imageUrl;
 
   @ElementCollection
   private List<String> actors;

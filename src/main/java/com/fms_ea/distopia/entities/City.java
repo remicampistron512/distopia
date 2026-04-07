@@ -17,6 +17,7 @@ public class City {
   private long id;
 
   private String name;
+  private String imageUrl;
 
   @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
   private List<Cinema> cinemas;

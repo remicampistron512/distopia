@@ -9,6 +9,7 @@ Showing "1" -- "0..*" Booking : receives
 class City {
   - long id
   - String name
+  - String imageUrl
 }
 
 class Cinema {
@@ -16,6 +17,7 @@ class Cinema {
   - String name
   - String address
   - double communityRating
+  - String imageUrl
 }
 
 class Movie {
@@ -29,6 +31,7 @@ class Movie {
   - String genre
   - String director
   - List<String> actors
+  - String imageUrl
 }
 
 class Showing {

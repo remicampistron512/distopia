@@ -19,6 +19,7 @@ public class Cinema {
   private String name;
   private String address;
   private double communityRating;
+  private String imageUrl;
 
   @ManyToOne
   @JoinColumn(name = "city_id")
