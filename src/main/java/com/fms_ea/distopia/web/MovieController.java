@@ -27,9 +27,17 @@ public class MovieController {
   }
 
   @PostMapping("/save")
-  public String saveMovie(@ModelAttribute Movie movie) {
-    movieService.save(movie,"");
-    return "redirect:/movies";
+  public String saveMovie(@ModelAttribute Movie movie,
+      @RequestParam(required = false) String actorsText) {
+    movieService.save(movie, actorsText);
+    return "redirect:/movies/admin";
+  }
+
+  @GetMapping("/admin/edit/{id}")
+  public String editMovieFromAdmin(@PathVariable Long id, Model model) {
+    model.addAttribute("movie", movieService.findById(id));
+    model.addAttribute("movies", movieService.findAll());
+    return "admin/movies";
   }
 
   @GetMapping("/edit/{id}")
@@ -42,5 +50,12 @@ public class MovieController {
   public String deleteMovie(@PathVariable Long id) {
     movieService.deleteById(id);
     return "redirect:/movies";
+  }
+
+  @GetMapping("/admin")
+  public String adminMovies(Model model) {
+    model.addAttribute("movie", new Movie());
+    model.addAttribute("movies", movieService.findAll());
+    return "admin/movies";
   }
 }
