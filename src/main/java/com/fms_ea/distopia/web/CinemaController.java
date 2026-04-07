@@ -32,7 +32,7 @@ public class CinemaController {
   @PostMapping("/save")
   public String saveCinema(@ModelAttribute Cinema cinema) {
     cinemaService.save(cinema);
-    return "redirect:/cinemas";
+    return "redirect:/cinemas/admin";
   }
 
   @GetMapping("/edit/{id}")
@@ -46,5 +46,13 @@ public class CinemaController {
   public String deleteCinema(@PathVariable Long id) {
     cinemaService.deleteById(id);
     return "redirect:/cinemas";
+  }
+
+  @GetMapping("/admin")
+  public String adminCinemas(Model model) {
+    model.addAttribute("cinema", new Cinema());
+    model.addAttribute("cinemas", cinemaService.findAll());
+    model.addAttribute("cities", cityService.findAll());
+    return "admin/cinemas";
   }
 }
