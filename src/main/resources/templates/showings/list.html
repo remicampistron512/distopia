@@ -20,7 +20,7 @@
       <th>Date & Heure</th>
       <th>Prix</th>
       <th>Places disponibles</th>
-      <th style="width: 160px;">Actions</th>
+
     </tr>
     </thead>
     <tbody>
@@ -31,11 +31,7 @@
       <td th:text="${#temporals.format(showing.startDateTime, 'dd/MM/yyyy HH:mm')}"></td>
       <td th:text="${showing.price}"></td>
       <td th:text="${showing.availableSeats}"></td>
-      <td>
-        <a th:href="@{'/showings/edit/' + ${showing.id}}" class="btn btn-warning btn-sm">Modifier</a>
-        <a th:href="@{'/showings/delete/' + ${showing.id}}" class="btn btn-danger btn-sm"
-           onclick="return confirm('Supprimer cette séance ?')">Supprimer</a>
-      </td>
+
     </tr>
     </tbody>
   </table>

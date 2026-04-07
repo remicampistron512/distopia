@@ -16,18 +16,14 @@
     <tr>
       <th>ID</th>
       <th>Nom</th>
-      <th style="width: 160px;">Actions</th>
+
     </tr>
     </thead>
     <tbody>
     <tr th:each="city : ${cities}">
       <td th:text="${city.id}"></td>
       <td th:text="${city.name}"></td>
-      <td>
-        <a th:href="@{'/cities/edit/' + ${city.id}}" class="btn btn-warning btn-sm">Modifier</a>
-        <a th:href="@{'/cities/delete/' + ${city.id}}" class="btn btn-danger btn-sm"
-           onclick="return confirm('Supprimer cette ville ?')">Supprimer</a>
-      </td>
+
     </tr>
     </tbody>
   </table>

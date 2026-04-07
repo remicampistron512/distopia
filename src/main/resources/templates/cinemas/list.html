@@ -21,7 +21,7 @@
       <th>Adresse</th>
       <th>Note public</th>
       <th>Ville</th>
-      <th style="width: 160px;">Actions</th>
+
     </tr>
     </thead>
     <tbody>
@@ -31,11 +31,7 @@
       <td th:text="${cinema.address}"></td>
       <td th:text="${cinema.communityRating}"></td>
       <td th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></td>
-      <td>
-        <a th:href="@{'/cinemas/edit/' + ${cinema.id}}" class="btn btn-warning btn-sm">Editer</a>
-        <a th:href="@{'/cinemas/delete/' + ${cinema.id}}" class="btn btn-danger btn-sm"
-           onclick="return confirm('Delete this cinema?')">Supprimer</a>
-      </td>
+
     </tr>
     </tbody>
   </table>
