@@ -43,4 +43,11 @@ public class CityController {
     cityService.deleteById(id);
     return "redirect:/cities";
   }
+
+  @GetMapping("/admin")
+  public String adminCities(Model model) {
+    model.addAttribute("city", new City());
+    model.addAttribute("cities", cityService.findAll());
+    return "admin/cities";
+  }
 }
