@@ -8,17 +8,17 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Cinemas</h1>
-    <a th:href="@{/cinemas/new}" class="btn btn-success">Add Cinema</a>
+    <a th:href="@{/cinemas/new}" class="btn btn-success">Ajouter Cinema</a>
   </div>
 
   <table class="table table-bordered table-hover">
     <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Rating</th>
-      <th>City</th>
+      <th>Nom</th>
+      <th>Adresse</th>
+      <th>Note public</th>
+      <th>Ville</th>
       <th style="width: 160px;">Actions</th>
     </tr>
     </thead>
@@ -30,9 +30,9 @@
       <td th:text="${cinema.communityRating}"></td>
       <td th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></td>
       <td>
-        <a th:href="@{'/cinemas/edit/' + ${cinema.id}}" class="btn btn-warning btn-sm">Edit</a>
+        <a th:href="@{'/cinemas/edit/' + ${cinema.id}}" class="btn btn-warning btn-sm">Editer</a>
         <a th:href="@{'/cinemas/delete/' + ${cinema.id}}" class="btn btn-danger btn-sm"
-           onclick="return confirm('Delete this cinema?')">Delete</a>
+           onclick="return confirm('Delete this cinema?')">Supprimer</a>
       </td>
     </tr>
     </tbody>
