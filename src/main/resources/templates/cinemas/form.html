@@ -8,7 +8,11 @@
 <div class="container mt-4">
   <h1 th:text="${cinema.id == 0 ? 'Créer un cinéma' : 'Modifier le cinéma'}">Formulaire Cinéma</h1>
 
-  <form th:action="@{/cinemas/save}" th:object="${cinema}" method="post">
+
+  <form th:action="@{/cinemas/save}"
+        th:object="${cinema}"
+        method="post"
+        enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}">
 
     <div class="mb-3">
@@ -35,6 +39,11 @@
                 th:text="${city.name}">
         </option>
       </select>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image du cinéma</label>
+      <input id="image" type="file" name="image" class="form-control" accept="image/*">
+      <div class="form-text">Formats acceptés : JPG, PNG, WEBP.</div>
     </div>
 
     <button type="submit" class="btn btn-primary">Enregistrer</button>
