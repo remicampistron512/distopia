@@ -30,6 +30,14 @@ L’accès à la fonctionnalité de réservation est conditionné par une authen
 
 ## Technologies
 
+Spring Boot 3.5.13
+Java 17
+Lombok
+Mariadb Driver
+Thymeleaf
+Spring Data JPA
+Spring web
+
 ## Installation
 
 ## Structure du projet
