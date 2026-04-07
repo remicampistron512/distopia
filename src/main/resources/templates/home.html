@@ -1,55 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Distopia Cinema - Home</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Accueil</title>
 </head>
-<body class="bg-light">
 
-<div th:replace="~{fragments/header :: header}"></div>
+<body>
 
-<main class="container my-5">
+<section layout:fragment="content">
 
+  <!-- Films -->
   <section class="mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="mb-0">Films à l'affiche</h2>
-    </div>
+    <h2 class="mb-4">Films à l'affiche</h2>
 
     <div class="row g-4">
       <div class="col-md-6 col-lg-4" th:each="movie : ${movies}">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title" th:text="${movie.title}">Movie title</h5>
-            <p class="card-text mb-1">
-              <strong>Année:</strong>
-              <span th:text="${movie.year}">2026</span>
-            </p>
-            <p class="card-text mb-1">
-              <strong>Durée:</strong>
-              <span th:text="${movie.duration}">120</span> min
-            </p>
-            <p class="card-text mb-1">
-              <strong>Genre:</strong>
-              <span th:text="${movie.genre}">Sci-Fi</span>
-            </p>
-            <p class="card-text mb-1">
-              <strong>Réalisateur:</strong>
-              <span th:text="${movie.director}">Director name</span>
-            </p>
-            <p class="card-text mb-1">
-              <strong>Note public:</strong>
-              <span th:text="${movie.communityRating}">4.5</span>
-            </p>
-            <p class="card-text mb-1">
-              <strong>Note critiques:</strong>
-              <span th:text="${movie.criticsRating}">4.2</span>
-            </p>
-            <p class="card-text">
-              <strong>Année de sortie:</strong>
-              <span th:text="${movie.releaseDate}">2026-01-01</span>
+            <h5 th:text="${movie.title}"></h5>
+            <p><strong>Année:</strong> <span th:text="${movie.year}"></span></p>
+            <p><strong>Durée:</strong> <span th:text="${movie.duration}"></span> min</p>
+            <p><strong>Genre:</strong> <span th:text="${movie.genre}"></span></p>
+            <p><strong>Réalisateur:</strong> <span th:text="${movie.director}"></span></p>
+            <p><strong>Note public:</strong> <span th:text="${movie.communityRating}"></span></p>
+            <p><strong>Note critiques:</strong> <span th:text="${movie.criticsRating}"></span></p>
+            <p><strong>Sortie:</strong>
+              <span th:text="${#temporals.format(movie.releaseDate, 'dd/MM/yyyy')}"></span>
             </p>
           </div>
         </div>
@@ -57,28 +36,19 @@
     </div>
   </section>
 
-
+  <!-- Cinémas -->
   <section class="mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="mb-0">Les meilleurs cinémas</h2>
-    </div>
+    <h2 class="mb-4">Les meilleurs cinémas</h2>
 
     <div class="row g-4">
       <div class="col-md-6 col-lg-4" th:each="cinema : ${cinemas}">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title" th:text="${cinema.name}">Nom du cinéma</h5>
-            <p class="card-text mb-1">
-              <strong>Adresse:</strong>
-              <span th:text="${cinema.address}">Adresse</span>
-            </p>
-            <p class="card-text mb-1">
-              <strong>Note public:</strong>
-              <span th:text="${cinema.communityRating}">4.7</span>
-            </p>
-            <p class="card-text">
-              <strong>Ville :</strong>
-              <span th:text="${cinema.city != null ? cinema.city.name : 'N/A'}">Paris</span>
+            <h5 th:text="${cinema.name}"></h5>
+            <p><strong>Adresse:</strong> <span th:text="${cinema.address}"></span></p>
+            <p><strong>Note public:</strong> <span th:text="${cinema.communityRating}"></span></p>
+            <p><strong>Ville:</strong>
+              <span th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></span>
             </p>
           </div>
         </div>
@@ -86,23 +56,19 @@
     </div>
   </section>
 
-
+  <!-- Villes -->
   <section class="mb-5">
     <h2 class="mb-4">Top villes</h2>
 
     <div class="bg-white rounded shadow-sm p-4">
-            <span class="badge text-bg-secondary me-2 mb-2"
-                  th:each="city : ${cities}"
-                  th:text="${city.name}">
-                Paris
-            </span>
+      <span class="badge text-bg-secondary me-2 mb-2"
+            th:each="city : ${cities}"
+            th:text="${city.name}">
+      </span>
     </div>
   </section>
 
-</main>
+</section>
 
-<div th:replace="~{fragments/footer :: footer}"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
