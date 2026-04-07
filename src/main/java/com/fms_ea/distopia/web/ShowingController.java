@@ -33,9 +33,23 @@ public class ShowingController {
   }
 
   @PostMapping("/save")
-  public String saveShowing(@ModelAttribute Showing showing) {
+  public String saveShowing(@RequestParam(required = false) Long id,
+      @RequestParam String startDateTime,
+      @RequestParam int availableSeats,
+      @RequestParam double price,
+      @RequestParam Long cinemaId,
+      @RequestParam Long movieId) {
+
+    Showing showing = (id != null && id != 0) ? showingService.findById(id) : new Showing();
+
+    showing.setStartDateTime(java.time.LocalDateTime.parse(startDateTime));
+    showing.setAvailableSeats(availableSeats);
+    showing.setPrice(java.math.BigDecimal.valueOf(price));
+    showing.setCinema(cinemaService.findById(cinemaId));
+    showing.setMovie(movieService.findById(movieId));
+
     showingService.save(showing);
-    return "redirect:/showings";
+    return "redirect:/showings/admin";
   }
 
   @GetMapping("/edit/{id}")
@@ -50,5 +64,23 @@ public class ShowingController {
   public String deleteShowing(@PathVariable Long id) {
     showingService.deleteById(id);
     return "redirect:/showings";
+  }
+
+  @GetMapping("/admin")
+  public String adminShowings(Model model) {
+    model.addAttribute("showing", new Showing());
+    model.addAttribute("showings", showingService.findAll());
+    model.addAttribute("cinemas", cinemaService.findAll());
+    model.addAttribute("movies", movieService.findAll());
+    return "admin/showings";
+  }
+
+  @GetMapping("/admin/edit/{id}")
+  public String editShowingFromAdmin(@PathVariable Long id, Model model) {
+    model.addAttribute("showing", showingService.findById(id));
+    model.addAttribute("showings", showingService.findAll());
+    model.addAttribute("cinemas", cinemaService.findAll());
+    model.addAttribute("movies", movieService.findAll());
+    return "admin/showings";
   }
 }
