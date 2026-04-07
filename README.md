@@ -21,7 +21,7 @@ Un cinéma est rattaché à une ville, chaque ville pouvant être gérée par un
 cinéma ont un certain nombre de films à l'affiche qui, eux aussi, sont gérables par l'administrateur.
 L'administrateur a ainsi la possibilité d'ajouter/modifier/supprimer ces différentes entités
 
-Les utilisateurs non connecte  peuvent afficher les cinémas d'une ville, rechercher un cinéma par mot-clé
+Les utilisateurs non connectés peuvent afficher les cinémas d'une ville, rechercher un cinéma par mot-clé
 ainsi que visualiser les films à l'affiche et les séances associés.
 
 Le système doit également permettre à un utilisateur authentifié de réserver une ou plusieurs places 
