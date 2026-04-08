@@ -29,4 +29,9 @@ public class CityService {
   public void deleteById(Long id) {
     cityRepository.deleteById(id);
   }
+
+  public City findByIdWithCinemas(Long id) {
+    return cityRepository.findByIdWithCinemas(id)
+        .orElseThrow(() -> new RuntimeException("Ville non trouvée avec id : " + id));
+  }
 }

@@ -25,6 +25,12 @@ public class CityController {
     return "cities/list";
   }
 
+  @GetMapping("/view/{id}")
+  public String showCreateForm(@PathVariable Long id, Model model) {
+    model.addAttribute("city", cityService.findByIdWithCinemas(id));
+    return "cities/view";
+  }
+
   @GetMapping("/new")
   public String showCreateForm(Model model) {
     model.addAttribute("city", new City());
