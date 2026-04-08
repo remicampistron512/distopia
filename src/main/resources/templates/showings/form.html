@@ -21,18 +21,18 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Prix</label>
-      <input type="number" step="0.01" name="price" class="form-control">
+      <label for="price" class="form-label">Prix</label>
+      <input type="number" step="0.01" id="price" name="price" class="form-control">
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Places disponibles</label>
-      <input type="number" name="availableSeats" class="form-control">
+      <label for="availableSeats" class="form-label">Places disponibles</label>
+      <input type="number" id="availableSeats" name="availableSeats" class="form-control">
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Cinéma</label>
-      <select name="cinemaId" class="form-select">
+      <label  for="cinemaId" class="form-label">Cinéma</label>
+      <select id="cinemaId" name="cinemaId" class="form-select">
         <option th:each="cinema : ${cinemas}"
                 th:value="${cinema.id}"
                 th:text="${cinema.name}">
@@ -41,8 +41,8 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Film</label>
-      <select name="movieId" class="form-select">
+      <label for="movieId" class="form-label">Film</label>
+      <select id="movieId" name="movieId" class="form-select">
         <option th:each="movie : ${movies}"
                 th:value="${movie.id}"
                 th:text="${movie.title}">
