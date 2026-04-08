@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -20,6 +21,7 @@ public class Movie {
   private String title;
   private int year;
   private int duration;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate releaseDate;
   private double criticsRating;
   private double communityRating;
