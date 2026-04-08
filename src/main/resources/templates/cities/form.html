@@ -8,12 +8,21 @@
 <div class="container mt-4">
   <h1 th:text="${city.id == null ? 'Créer une ville' : 'Modifier la ville'}">Formulaire Ville</h1>
 
-  <form th:action="@{/cities/save}" th:object="${city}" method="post">
+  <form th:action="@{/cities/save}"
+        th:object="${city}"
+        method="post"
+        enctype="multipart/form-data">
+
     <input type="hidden" th:field="*{id}">
 
     <div class="mb-3">
       <label class="form-label">Nom</label>
       <input type="text" th:field="*{name}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image du film</label>
+      <input id="image" type="file" name="image" class="form-control" accept="image/*">
+      <div class="form-text">Formats acceptés : JPG, PNG, WEBP.</div>
     </div>
 
     <button type="submit" class="btn btn-primary">Enregistrer</button>

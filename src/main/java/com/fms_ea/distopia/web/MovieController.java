@@ -2,10 +2,14 @@ package com.fms_ea.distopia.controllers;
 
 import com.fms_ea.distopia.entities.Movie;
 import com.fms_ea.distopia.services.MovieService;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/movies")
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MovieController {
 
   private final MovieService movieService;
+  private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
 
   @GetMapping
   public String listMovies(Model model) {
@@ -28,7 +33,25 @@ public class MovieController {
 
   @PostMapping("/save")
   public String saveMovie(@ModelAttribute Movie movie,
-      @RequestParam(required = false) String actorsText) {
+      @RequestParam(required = false) String actorsText,@RequestParam("image") MultipartFile image) {
+    if (!image.isEmpty()) {
+      try {
+        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+
+        File dir = new File(uploadDir);
+        if (!dir.exists()) {
+          dir.mkdirs();
+        }
+
+        File dest = new File(dir, fileName);
+        image.transferTo(dest);
+
+        movie.setImageUrl("/uploads/" + fileName);
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
     movieService.save(movie, actorsText);
     return "redirect:/movies/admin";
   }
