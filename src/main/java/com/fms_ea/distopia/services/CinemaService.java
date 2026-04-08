@@ -22,6 +22,10 @@ public class CinemaService {
         .orElseThrow(() -> new RuntimeException("Cinéma non trouvé avec id : " + id));
   }
 
+  public Cinema findByIdWithShowings(Long id) {
+    return cinemaRepository.findByIdWithShowings(id)
+        .orElseThrow(() -> new RuntimeException("Cinéma non trouvé"));
+  }
   public Cinema save(Cinema cinema) {
     return cinemaRepository.save(cinema);
   }

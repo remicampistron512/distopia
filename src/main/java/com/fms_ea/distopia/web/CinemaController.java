@@ -34,6 +34,12 @@ public class CinemaController {
     return "cinemas/form";
   }
 
+  @GetMapping("/view/{id}")
+  public String showCreateForm(@PathVariable Long id, Model model) {
+    model.addAttribute("cinema", cinemaService.findByIdWithShowings(id));
+    return "cinemas/view";
+  }
+
   @PostMapping("/save")
   public String saveCinema(@ModelAttribute Cinema cinema,
       @RequestParam("image") MultipartFile image) {

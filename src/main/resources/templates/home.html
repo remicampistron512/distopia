@@ -44,12 +44,15 @@
       <div class="col-md-6 col-lg-4" th:each="cinema : ${cinemas}">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 th:text="${cinema.name}"></h5>
-            <p><strong>Adresse:</strong> <span th:text="${cinema.address}"></span></p>
-            <p><strong>Note public:</strong> <span th:text="${cinema.communityRating}"></span></p>
-            <p><strong>Ville:</strong>
-              <span th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></span>
-            </p>
+
+            <a th:href="@{'/cinemas/view/' + ${cinema.id}}" >
+              <h5 th:text="${cinema.name}"></h5>
+              <p><strong>Adresse:</strong> <span th:text="${cinema.address}"></span></p>
+              <p><strong>Note public:</strong> <span th:text="${cinema.communityRating}"></span></p>
+              <p><strong>Ville:</strong>
+                <span th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></span>
+              </p>
+            </a>
           </div>
         </div>
       </div>
