@@ -1,5 +1,6 @@
 package com.fms_ea.distopia.services;
 
+import com.fms_ea.distopia.entities.City;
 import com.fms_ea.distopia.entities.Movie;
 import com.fms_ea.distopia.repositories.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,10 @@ public class MovieService {
 
   public void deleteById(Long id) {
     movieRepository.deleteById(id);
+  }
+
+  public Movie findByIdWithShowings(Long id) {
+    return movieRepository.findByIdWithShowings(id)
+        .orElseThrow(() -> new RuntimeException("Film non trouvé avec l'id: " + id));
   }
 }

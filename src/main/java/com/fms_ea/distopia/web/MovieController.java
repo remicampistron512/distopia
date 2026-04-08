@@ -31,6 +31,13 @@ public class MovieController {
     return "movies/form";
   }
 
+  @GetMapping("/view/{id}")
+  public String showDetails(@PathVariable Long id, Model model) {
+    model.addAttribute("movie", movieService.findByIdWithShowings(id));
+    return "movies/view";
+  }
+
+
   @PostMapping("/save")
   public String saveMovie(@ModelAttribute Movie movie,
       @RequestParam(required = false) String actorsText,@RequestParam("image") MultipartFile image) {
