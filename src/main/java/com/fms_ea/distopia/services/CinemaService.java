@@ -33,4 +33,8 @@ public class CinemaService {
   public void deleteById(Long id) {
     cinemaRepository.deleteById(id);
   }
+
+  public Object findByNameContains(String kw) {
+    return cinemaRepository.findByNameContains(kw);
+  }
 }

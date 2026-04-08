@@ -22,8 +22,13 @@ public class CinemaController {
   private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
 
   @GetMapping
-  public String listCinemas(Model model) {
-    model.addAttribute("cinemas", cinemaService.findAll());
+  public String listCinemas(  @RequestParam(name = "keyword", defaultValue = "") String kw,Model model) {
+    if(!kw.isEmpty()){
+      model.addAttribute("cinemas", cinemaService.findByNameContains(kw));
+    } else {
+      model.addAttribute("cinemas", cinemaService.findAll());
+    }
+
     return "cinemas/list";
   }
 

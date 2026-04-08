@@ -18,4 +18,6 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
         where c.id = :id
     """)
   Optional<Cinema> findByIdWithShowings(@Param("id") Long id);
+
+  List<Cinema> findByNameContains(String kw);
 }
