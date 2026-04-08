@@ -20,16 +20,11 @@
       <div class="col-md-6 col-lg-4" th:each="movie : ${movies}">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 th:text="${movie.title}"></h5>
-            <p><strong>Année:</strong> <span th:text="${movie.year}"></span></p>
-            <p><strong>Durée:</strong> <span th:text="${movie.duration}"></span> min</p>
-            <p><strong>Genre:</strong> <span th:text="${movie.genre}"></span></p>
-            <p><strong>Réalisateur:</strong> <span th:text="${movie.director}"></span></p>
-            <p><strong>Note public:</strong> <span th:text="${movie.communityRating}"></span></p>
-            <p><strong>Note critiques:</strong> <span th:text="${movie.criticsRating}"></span></p>
-            <p><strong>Sortie:</strong>
-              <span th:text="${#temporals.format(movie.releaseDate, 'dd/MM/yyyy')}"></span>
-            </p>
+            <a th:href="@{'/movies/view/' + ${movie.id}}">
+              <img class="img-fluid w-100"
+                   style="height: 300px; object-fit: cover;"
+                   th:src="${movie.imageUrl}" />
+            </a>
           </div>
         </div>
       </div>
@@ -46,6 +41,7 @@
           <div class="card-body">
 
             <a th:href="@{'/cinemas/view/' + ${cinema.id}}" >
+              <img th:src="${cinema.imageUrl}" class="img-fluid w-100" />
               <h5 th:text="${cinema.name}"></h5>
               <p><strong>Adresse:</strong> <span th:text="${cinema.address}"></span></p>
               <p><strong>Note public:</strong> <span th:text="${cinema.communityRating}"></span></p>
@@ -61,13 +57,19 @@
 
   <!-- Villes -->
   <section class="mb-5">
-    <h2 class="mb-4">Top villes</h2>
+    <h2 class="mb-4">Villes</h2>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" th:each="city : ${cities}">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
 
-    <div class="bg-white rounded shadow-sm p-4">
-      <span class="badge text-bg-secondary me-2 mb-2"
-            th:each="city : ${cities}"
-            th:text="${city.name}">
-      </span>
+            <a th:href="@{'/cities/view/' + ${city.id}}" >
+              <img th:src="${city.imageUrl}" />
+              <h5 th:text="${city.name}"></h5>
+            </a>
+          </div>
+          </div>
+        </div>
     </div>
   </section>
 

@@ -28,8 +28,11 @@
           <li class="nav-item">
             <a class="nav-link" th:href="@{/bookings}">Réservations</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/users}">Utilisateurs</a>
+          </li>
         </ul>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul th:if="${session.loggedUser != null}" class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" th:href="@{/cinemas/admin}">Cinemas</a>
           </li>
@@ -37,7 +40,7 @@
             <a class="nav-link" th:href="@{/movies/admin}">Films</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/showings/admin}">A l'affiche</a>
+            <a class="nav-link" th:href="@{/showings/admin}">Séances</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/bookings/admin}">Réservations</a>
@@ -46,6 +49,26 @@
             <a class="nav-link" th:href="@{/cities/admin}">Villes</a>
           </li>
         </ul>
+      </div>
+      <div class="d-flex align-items-center">
+
+        <a th:if="${session.loggedUser == null}"
+           class="btn btn-outline-primary me-2"
+           th:href="@{/login}">
+          Se connecter
+        </a>
+
+        <div th:if="${session.loggedUser != null}" class="d-flex align-items-center">
+      <span class="me-3">
+        Bonjour <strong th:text="${session.loggedUser.username}"></strong>
+      </span>
+
+          <a class="btn btn-outline-danger"
+             th:href="@{/logout}">
+            Déconnexion
+          </a>
+        </div>
+
       </div>
     </div>
   </nav>

@@ -13,7 +13,9 @@
 <body class="bg-light">
 
 <div th:replace="~{fragments/header :: header}"></div>
-
+<div th:if="${successMessage}" class="alert alert-success">
+<span th:text="${successMessage}"></span>
+</div>
 <main class="container my-5" layout:fragment="content">
   <!-- Page content -->
 </main>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Identification</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+
+
+
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Login</h2>
+
+          <form th:action="@{/login}" method="post" th:object="${user}">
+            <div class="mb-3">
+              <label for="username" class="form-label">Nom d'utilisateur</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  placeholder="Votre email"
+                  required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Votre mot de passe"
+                  required
+              />
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
