@@ -1,79 +1,61 @@
 package com.fms_ea.distopia.web;
 
-
 import com.fms_ea.distopia.entities.User;
-import com.fms_ea.distopia.repositories.UserRepository;
+import com.fms_ea.distopia.services.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-  /**
-   * Controller handling user :
-   * <p>
-   *   <ul>
-   *     <li>
-   *       - list users
-   *     </li>
-   *     <li>
-   *       create user
-   *     </li>
-   *     <li>
-   *       save user
-   *     </li>
-   *     <li>
-   *       edit user
-   *     </li>
-   *     <li>
-   *       save user
-   *     </li>
-   *   </ul>
-   * </p>
-   */
-  @Autowired
-  private UserRepository userRepository;
+  private final UserService userService;
 
   /**
-   * List users
+   * Public list of users
    * @param model data passed to the view
-   * @return users view
+   * @return users list view
    */
-  @GetMapping("/users")
-  public String manageUsers(Model model) {
-    List<User> users = userRepository.findAll();
+  @GetMapping
+  public String listUsers(Model model) {
+    List<User> users = userService.findAll();
     model.addAttribute("users", users);
+    model.addAttribute("currentPage", "users");
     return "users/list";
   }
 
   /**
-   * Display user creation form
+   * Admin page: form + users list
    * @param model data passed to the view
-   * @return createUser view
+   * @return admin users page
    */
-  @GetMapping("/createUser")
-  public String createUser(Model model) {
+  @GetMapping("/admin")
+  public String adminUsers(Model model) {
     model.addAttribute("user", new User());
-    return "createUser";
+    model.addAttribute("users", userService.findAll());
+    model.addAttribute("currentPage", "users/admin");
+    return "admin/users";
   }
 
   /**
-   * Handle user creation and editing
+   * Save a user from admin page
    * @param user the user object
-   * @param bindingResult contains validation errors (if any)
+   * @param bindingResult contains validation errors
    * @param model data passed to the view
-   * @param redirectAttributes  used to pass success messages after redirect
-   * @return the destination view
+   * @param redirectAttributes used to pass success messages after redirect
+   * @return destination view
    */
-  @PostMapping("/saveUser")
+  @PostMapping("/save")
   public String saveUser(
       @Valid User user,
       BindingResult bindingResult,
@@ -82,42 +64,59 @@ public class UserController {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("user", user);
-      return "createUser";
+      model.addAttribute("users", userService.findAll());
+      model.addAttribute("currentPage", "users/admin");
+      return "admin/users";
     }
 
-    userRepository.save(user);
+    userService.save(user);
     redirectAttributes.addFlashAttribute("successMessage", "Utilisateur enregistré");
-    return "redirect:/index";
+    return "redirect:/users/admin";
   }
 
   /**
-   * Display user editing form
-   * @param id the passed user id
-   * @param model  data passed to the view
-   * @param redirectAttributes used to pass success messages after redirect
-   * @return the destination view
+   * Load a user into the admin form for editing
+   * @param id the user id
+   * @param model data passed to the view
+   * @param redirectAttributes used to pass messages after redirect
+   * @return admin users page
    */
-  @GetMapping("/editUser")
-  public String editUser(
-      @RequestParam("id") Long id,
+  @GetMapping("/edit/{id}")
+  public String showEditForm(
+      @PathVariable Long id,
       Model model,
       RedirectAttributes redirectAttributes) {
 
-    User user = userRepository.findById(id).orElse(null);
+    User user = userService.findById(id);
 
     if (user == null) {
       redirectAttributes.addFlashAttribute("errorMessage", "Utilisateur introuvable");
-      return "redirect:/users";
+      return "redirect:/users/admin";
     }
 
     model.addAttribute("user", user);
-    return "editUser";
+    model.addAttribute("users", userService.findAll());
+    model.addAttribute("currentPage", "users/admin");
+    return "users/form";
   }
 
-  @GetMapping("/deleteUser")
-  public String deleteUser(@RequestParam Long id, RedirectAttributes redirectAttributes) {
-    userRepository.deleteById(id);
+  /**
+   * Delete a user
+   * @param id the user id
+   * @param redirectAttributes used to pass messages after redirect
+   * @return redirect to admin users page
+   */
+  @GetMapping("/delete/{id}")
+  public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    User user = userService.findById(id);
+
+    if (user == null) {
+      redirectAttributes.addFlashAttribute("errorMessage", "Utilisateur introuvable");
+      return "redirect:/users/admin";
+    }
+
+    userService.deleteById(id);
     redirectAttributes.addFlashAttribute("successMessage", "Utilisateur supprimé");
-    return "redirect:/users";
+    return "redirect:/users/admin";
   }
 }
