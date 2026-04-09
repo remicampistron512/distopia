@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller for movie management.
+ * Handles public display, administration, and image upload.
+ */
 @Controller
 @RequestMapping("/movies")
 @RequiredArgsConstructor
@@ -20,6 +24,12 @@ public class MovieController {
   private final MovieService movieService;
   private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
 
+  /**
+   * Displays the list of movies.
+   *
+   * @param model view model
+   * @return movie list view
+   */
   @GetMapping
   public String listMovies(Model model) {
     model.addAttribute("movies", movieService.findAll());
@@ -27,6 +37,12 @@ public class MovieController {
     return "movies/list";
   }
 
+  /**
+   * Displays the movie creation form.
+   *
+   * @param model view model
+   * @return movie form view
+   */
   @GetMapping("/new")
   public String showCreateForm(Model model) {
     model.addAttribute("movie", new Movie());
@@ -34,6 +50,14 @@ public class MovieController {
     return "movies/form";
   }
 
+  /**
+   * Displays movie details with showings.
+   *
+   * @param id movie id
+   * @param model view model
+   * @param redirectAttributes flash messages
+   * @return movie detail view or redirect
+   */
   @GetMapping("/view/{id}")
   public String showDetails(
       @PathVariable Long id,
@@ -53,6 +77,15 @@ public class MovieController {
     return "movies/view";
   }
 
+  /**
+   * Saves a movie.
+   *
+   * @param movie movie to save
+   * @param actorsText actors list
+   * @param image uploaded image
+   * @param redirectAttributes flash messages
+   * @return redirect to admin page
+   */
   @PostMapping("/save")
   public String saveMovie(
       @ModelAttribute Movie movie,
@@ -89,6 +122,14 @@ public class MovieController {
     return "redirect:/movies/admin";
   }
 
+  /**
+   * Displays the movie edit form from admin.
+   *
+   * @param id movie id
+   * @param model view model
+   * @param redirectAttributes flash messages
+   * @return admin view or redirect
+   */
   @GetMapping("/admin/edit/{id}")
   public String editMovieFromAdmin(
       @PathVariable Long id,
@@ -109,6 +150,14 @@ public class MovieController {
     return "admin/movies";
   }
 
+  /**
+   * Displays the movie edit form.
+   *
+   * @param id movie id
+   * @param model view model
+   * @param redirectAttributes flash messages
+   * @return movie form view or redirect
+   */
   @GetMapping("/edit/{id}")
   public String showEditForm(
       @PathVariable Long id,
@@ -128,6 +177,13 @@ public class MovieController {
     return "movies/form";
   }
 
+  /**
+   * Deletes a movie.
+   *
+   * @param id movie id
+   * @param redirectAttributes flash messages
+   * @return redirect to admin page
+   */
   @GetMapping("/delete/{id}")
   public String deleteMovie(
       @PathVariable Long id,
@@ -146,6 +202,12 @@ public class MovieController {
     return "redirect:/movies/admin";
   }
 
+  /**
+   * Displays the movie administration page.
+   *
+   * @param model view model
+   * @return admin movie view
+   */
   @GetMapping("/admin")
   public String adminMovies(Model model) {
     model.addAttribute("movie", new Movie());

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller for cinema management.
+ * Handles public display, administration, and image upload.
+ */
 @Controller
 @RequestMapping("/cinemas")
 @RequiredArgsConstructor
@@ -23,6 +27,13 @@ public class CinemaController {
 
   private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
 
+  /**
+   * Displays the list of cinemas.
+   *
+   * @param kw search keyword
+   * @param model view model
+   * @return cinema list view
+   */
   @GetMapping
   public String listCinemas(
       @RequestParam(name = "keyword", defaultValue = "") String kw,
@@ -39,7 +50,12 @@ public class CinemaController {
     return "cinemas/list";
   }
 
-
+  /**
+   * Displays the cinema creation form.
+   *
+   * @param model view model
+   * @return cinema form view
+   */
   @GetMapping("/new")
   public String showCreateForm(Model model) {
     model.addAttribute("cinema", new Cinema());
@@ -48,9 +64,17 @@ public class CinemaController {
     return "cinemas/form";
   }
 
-
+  /**
+   * Displays cinema details.
+   *
+   * @param id cinema id
+   * @param model view model
+   * @param redirectAttributes flash messages
+   * @return cinema detail view or redirect
+   */
   @GetMapping("/view/{id}")
-  public String showCinema(@PathVariable Long id,
+  public String showCinema(
+      @PathVariable Long id,
       Model model,
       RedirectAttributes redirectAttributes) {
 
@@ -66,7 +90,14 @@ public class CinemaController {
     return "cinemas/view";
   }
 
-
+  /**
+   * Saves a cinema.
+   *
+   * @param cinema cinema to save
+   * @param image uploaded image
+   * @param redirectAttributes flash messages
+   * @return redirect to admin page
+   */
   @PostMapping("/save")
   public String saveCinema(
       @ModelAttribute Cinema cinema,
@@ -102,7 +133,14 @@ public class CinemaController {
     return "redirect:/cinemas/admin";
   }
 
-
+  /**
+   * Displays the cinema edit form.
+   *
+   * @param id cinema id
+   * @param model view model
+   * @param redirectAttributes flash messages
+   * @return edit form or redirect
+   */
   @GetMapping("/edit/{id}")
   public String showEditForm(
       @PathVariable Long id,
@@ -124,7 +162,13 @@ public class CinemaController {
     return "cinemas/form";
   }
 
-
+  /**
+   * Deletes a cinema.
+   *
+   * @param id cinema id
+   * @param redirectAttributes flash messages
+   * @return redirect to admin page
+   */
   @GetMapping("/delete/{id}")
   public String deleteCinema(
       @PathVariable Long id,
@@ -143,7 +187,12 @@ public class CinemaController {
     return "redirect:/cinemas/admin";
   }
 
-
+  /**
+   * Displays the cinema administration page.
+   *
+   * @param model view model
+   * @return admin cinema view
+   */
   @GetMapping("/admin")
   public String adminCinemas(Model model) {
     model.addAttribute("cinema", new Cinema());

@@ -1,18 +1,31 @@
 package com.fms_ea.distopia.repositories;
 
-import com.fms_ea.distopia.entities.City;
 import com.fms_ea.distopia.entities.Movie;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repository for movie persistence.
+ * Provides database access for Movie entities.
+ */
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
+  /**
+   * Finds the top 6 highest-rated movies.
+   *
+   * @return featured movies
+   */
   List<Movie> findTop6ByOrderByCommunityRatingDesc();
 
+  /**
+   * Finds a movie with its showings and related cinemas.
+   *
+   * @param id movie id
+   * @return movie with associated showings
+   */
   @Query("""
     select distinct m
     from Movie m
