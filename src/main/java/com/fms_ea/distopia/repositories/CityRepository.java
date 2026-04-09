@@ -15,12 +15,11 @@ public interface CityRepository extends JpaRepository<City, Long> {
 
 
   @Query("""
-        select c
-        from City c
-        left join fetch c.cinemas
-        where c.id = :id
-    """)
+    select distinct c
+    from City c
+    left join fetch c.cinemas
+    where c.id = :id
+""")
   Optional<City> findByIdWithCinemas(@Param("id") Long id);
-
 
 }
