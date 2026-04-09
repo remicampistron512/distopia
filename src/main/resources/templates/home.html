@@ -10,66 +10,140 @@
 
 <body>
 
-<section layout:fragment="content">
+<section layout:fragment="content" class="container py-4">
+
+
 
   <!-- Films -->
   <section class="mb-5">
-    <h2 class="mb-4">Films à l'affiche</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="h3 mb-0">Films à l'affiche</h2>
+      <a th:href="@{/movies}" class="btn btn-outline-primary btn-sm">Voir tout</a>
+    </div>
 
-    <div class="row g-4">
+    <div th:if="${movies != null and !#lists.isEmpty(movies)}" class="row g-4">
       <div class="col-md-6 col-lg-4" th:each="movie : ${movies}">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <a th:href="@{'/movies/view/' + ${movie.id}}">
-              <img class="img-fluid w-100"
-                   style="height: 300px; object-fit: cover;"
-                   th:src="${movie.imageUrl}" />
-            </a>
-          </div>
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <a th:href="@{/movies/view/{id}(id=${movie.id})}" class="text-decoration-none text-dark">
+            <img th:if="${movie.imageUrl != null and !#strings.isEmpty(movie.imageUrl)}"
+                 th:src="@{${movie.imageUrl}}"
+                 th:alt="${movie.title}"
+                 class="img-fluid w-100"
+                 style="height: 320px; object-fit: cover;">
+
+            <div th:if="${movie.imageUrl == null or #strings.isEmpty(movie.imageUrl)}"
+                 class="d-flex align-items-center justify-content-center bg-light text-muted"
+                 style="height: 320px;">
+              Aucune image disponible
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title mb-2" th:text="${movie.title}">Titre du film</h5>
+              <p class="card-text text-muted mb-1">
+                <strong>Genre :</strong>
+                <span th:text="${movie.genre != null ? movie.genre : 'Non renseigné'}">Genre</span>
+              </p>
+              <p class="card-text text-muted mb-0">
+                <strong>Note public :</strong>
+                <span th:text="${movie.communityRating}">0</span>
+              </p>
+            </div>
+          </a>
         </div>
       </div>
+    </div>
+
+    <div th:if="${movies == null or #lists.isEmpty(movies)}" class="alert alert-info mb-0">
+      Aucun film à l'affiche pour le moment.
     </div>
   </section>
 
   <!-- Cinémas -->
   <section class="mb-5">
-    <h2 class="mb-4">Les meilleurs cinémas</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="h3 mb-0">Les meilleurs cinémas</h2>
+      <a th:href="@{/cinemas}" class="btn btn-outline-primary btn-sm">Voir tout</a>
+    </div>
 
-    <div class="row g-4">
+    <div th:if="${cinemas != null and !#lists.isEmpty(cinemas)}" class="row g-4">
       <div class="col-md-6 col-lg-4" th:each="cinema : ${cinemas}">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <a th:href="@{/cinemas/view/{id}(id=${cinema.id})}" class="text-decoration-none text-dark">
 
-            <a th:href="@{'/cinemas/view/' + ${cinema.id}}" >
-              <img th:src="${cinema.imageUrl}" class="img-fluid w-100" />
-              <h5 th:text="${cinema.name}"></h5>
-              <p><strong>Adresse:</strong> <span th:text="${cinema.address}"></span></p>
-              <p><strong>Note public:</strong> <span th:text="${cinema.communityRating}"></span></p>
-              <p><strong>Ville:</strong>
+            <img th:if="${cinema.imageUrl != null and !#strings.isEmpty(cinema.imageUrl)}"
+                 th:src="@{${cinema.imageUrl}}"
+                 th:alt="${cinema.name}"
+                 class="img-fluid w-100"
+                 style="height: 240px; object-fit: cover;">
+
+            <div th:if="${cinema.imageUrl == null or #strings.isEmpty(cinema.imageUrl)}"
+                 class="d-flex align-items-center justify-content-center bg-light text-muted"
+                 style="height: 240px;">
+              Aucune image disponible
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title mb-3" th:text="${cinema.name}">Nom du cinéma</h5>
+
+              <p class="card-text mb-2">
+                <strong>Adresse :</strong>
+                <span th:text="${cinema.address != null ? cinema.address : 'Non renseignée'}"></span>
+              </p>
+
+              <p class="card-text mb-2">
+                <strong>Note public :</strong>
+                <span th:text="${cinema.communityRating}"></span>
+              </p>
+
+              <p class="card-text mb-0">
+                <strong>Ville :</strong>
                 <span th:text="${cinema.city != null ? cinema.city.name : 'N/A'}"></span>
               </p>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       </div>
+    </div>
+
+    <div th:if="${cinemas == null or #lists.isEmpty(cinemas)}" class="alert alert-info mb-0">
+      Aucun cinéma disponible pour le moment.
     </div>
   </section>
 
   <!-- Villes -->
   <section class="mb-5">
-    <h2 class="mb-4">Villes</h2>
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4" th:each="city : ${cities}">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="h3 mb-0">Villes</h2>
+      <a th:href="@{/cities}" class="btn btn-outline-primary btn-sm">Voir tout</a>
+    </div>
 
-            <a th:href="@{'/cities/view/' + ${city.id}}" >
-              <img th:src="${city.imageUrl}" />
-              <h5 th:text="${city.name}"></h5>
-            </a>
-          </div>
-          </div>
+    <div th:if="${cities != null and !#lists.isEmpty(cities)}" class="row g-4">
+      <div class="col-md-6 col-lg-4" th:each="city : ${cities}">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <a th:href="@{/cities/view/{id}(id=${city.id})}" class="text-decoration-none text-dark">
+
+            <img th:if="${city.imageUrl != null and !#strings.isEmpty(city.imageUrl)}"
+                 th:src="@{${city.imageUrl}}"
+                 th:alt="${city.name}"
+                 class="img-fluid w-100"
+                 style="height: 240px; object-fit: cover;">
+
+            <div th:if="${city.imageUrl == null or #strings.isEmpty(city.imageUrl)}"
+                 class="d-flex align-items-center justify-content-center bg-light text-muted"
+                 style="height: 240px;">
+              Aucune image disponible
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title mb-0" th:text="${city.name}">Nom de la ville</h5>
+            </div>
+          </a>
         </div>
+      </div>
+    </div>
+
+    <div th:if="${cities == null or #lists.isEmpty(cities)}" class="alert alert-info mb-0">
+      Aucune ville disponible pour le moment.
     </div>
   </section>
 
