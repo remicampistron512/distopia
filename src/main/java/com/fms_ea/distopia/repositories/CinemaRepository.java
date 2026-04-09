@@ -12,11 +12,13 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
   List<Cinema> findTop12ByOrderByCommunityRatingDesc();
   @Query("""
-        select c
-        from Cinema c
-        left join fetch c.showings
-        where c.id = :id
-    """)
+    select distinct c
+    from Cinema c
+    left join fetch c.showings s
+    left join fetch s.movie
+    left join fetch c.city
+    where c.id = :id
+""")
   Optional<Cinema> findByIdWithShowings(@Param("id") Long id);
 
   List<Cinema> findByNameContains(String kw);
