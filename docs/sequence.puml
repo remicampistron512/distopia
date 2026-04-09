@@ -1,37 +1,39 @@
 @startuml
-title Diagramme de séquence — Identification utilisateur
-
 actor Utilisateur
-
-boundary "Page de connexion\n(login.html)" as LoginPage
-control "LoginController" as LoginController
-entity "UserService" as UserService
-database "UserRepository" as UserRepository
+participant "AuthController" as AuthController
+participant "AuthService" as AuthService
+participant "UserRepository" as UserRepository
 database "Base de données" as DB
-collections "Session HTTP" as Session
+participant "HttpSession" as Session
 
-Utilisateur -> LoginPage : Accéder à la page de connexion
-LoginPage --> Utilisateur : Afficher le formulaire
+Utilisateur -> AuthController : GET /login
+AuthController --> Utilisateur : retourne la vue "login"
 
-Utilisateur -> LoginPage : Saisir login / mot de passe\n+ soumettre
-LoginPage -> LoginController : POST /login(username, password)
+Utilisateur -> AuthController : POST /login(username, password)
+AuthController -> AuthService : authenticate(username, password)
 
-LoginController -> UserService : authenticate(username, password)
-UserService -> UserRepository : findByUsername(username)
-UserRepository -> DB : Rechercher utilisateur
-DB --> UserRepository : Utilisateur trouvé / null
-UserRepository --> UserService : Utilisateur
+AuthService -> UserRepository : findByUsername(username)
+UserRepository -> DB : recherche utilisateur
+DB --> UserRepository : User / vide
+UserRepository --> AuthService : Optional<User>
 
-alt Identifiants valides
-    UserService --> LoginController : Authentification réussie
-    LoginController -> Session : Stocker loggedUser
-    LoginController --> LoginPage : Redirection vers accueil
-    LoginPage --> Utilisateur : Afficher accueil connecté
+alt utilisateur introuvable
+    AuthService --> AuthController : UserNotFoundException
+    AuthController -> AuthController : addFlashAttribute("errorMessage")
+    AuthController --> Utilisateur : redirect:/login
+else utilisateur trouvé
+    AuthService -> AuthService : compare password avec user.password
 
-else Identifiants invalides
-    UserService --> LoginController : Échec authentification
-    LoginController --> LoginPage : Retour formulaire + message erreur
-    LoginPage --> Utilisateur : Afficher erreur de connexion
+    alt mot de passe incorrect
+        AuthService --> AuthController : BadCredentialsException
+        AuthController -> AuthController : addFlashAttribute("errorMessage")
+        AuthController --> Utilisateur : redirect:/login
+    else mot de passe correct
+        AuthService --> AuthController : User
+        AuthController -> AuthController : création SessionUser(id, username, role)
+        AuthController -> Session : setAttribute("loggedUser", sessionUser)
+        AuthController -> AuthController : addFlashAttribute("successMessage")
+        AuthController --> Utilisateur : redirect:/
+    end
 end
-
 @enduml
