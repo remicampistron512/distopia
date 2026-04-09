@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -18,6 +19,7 @@ public class Showing {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private LocalDateTime startDateTime;
   private BigDecimal price;
   private int availableSeats;
