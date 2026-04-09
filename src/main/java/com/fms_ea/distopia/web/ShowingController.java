@@ -154,6 +154,6 @@ public class ShowingController {
     model.addAttribute("movies", movieService.findAll());
     model.addAttribute("currentPage", "admin/showings");
 
-    return "admin/showings";
+    return "showings/form";
   }
 }

@@ -103,9 +103,9 @@ public class CityController {
 
     model.addAttribute("city", city);
     model.addAttribute("cities", cityService.findAll());
-    model.addAttribute("currentPage", "admin/cities");
+    model.addAttribute("currentPage", "cities/form");
 
-    return "admin/cities";
+    return "cities/form";
   }
 
   @GetMapping("/delete/{id}")

@@ -119,9 +119,9 @@ public class CinemaController {
     model.addAttribute("cinema", cinema);
     model.addAttribute("cinemas", cinemaService.findAll());
     model.addAttribute("cities", cityService.findAll());
-    model.addAttribute("currentPage", "admin/cinemas");
+    model.addAttribute("currentPage", "cinemas/form");
 
-    return "admin/cinemas";
+    return "cinemas/form";
   }
 
 
