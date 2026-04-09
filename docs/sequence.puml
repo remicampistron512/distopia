@@ -1,0 +1,37 @@
+@startuml
+title Diagramme de séquence — Identification utilisateur
+
+actor Utilisateur
+
+boundary "Page de connexion\n(login.html)" as LoginPage
+control "LoginController" as LoginController
+entity "UserService" as UserService
+database "UserRepository" as UserRepository
+database "Base de données" as DB
+collections "Session HTTP" as Session
+
+Utilisateur -> LoginPage : Accéder à la page de connexion
+LoginPage --> Utilisateur : Afficher le formulaire
+
+Utilisateur -> LoginPage : Saisir login / mot de passe\n+ soumettre
+LoginPage -> LoginController : POST /login(username, password)
+
+LoginController -> UserService : authenticate(username, password)
+UserService -> UserRepository : findByUsername(username)
+UserRepository -> DB : Rechercher utilisateur
+DB --> UserRepository : Utilisateur trouvé / null
+UserRepository --> UserService : Utilisateur
+
+alt Identifiants valides
+    UserService --> LoginController : Authentification réussie
+    LoginController -> Session : Stocker loggedUser
+    LoginController --> LoginPage : Redirection vers accueil
+    LoginPage --> Utilisateur : Afficher accueil connecté
+
+else Identifiants invalides
+    UserService --> LoginController : Échec authentification
+    LoginController --> LoginPage : Retour formulaire + message erreur
+    LoginPage --> Utilisateur : Afficher erreur de connexion
+end
+
+@enduml
