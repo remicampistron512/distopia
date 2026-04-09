@@ -136,7 +136,7 @@
                 <span class="badge bg-success" th:text="${showingItem.availableSeats}">80</span>
               </td>
               <td class="text-end">
-                <a th:href="@{'/showings/admin/edit/' + ${showingItem.id}}" class="btn btn-warning btn-sm">Modifier</a>
+                <a th:href="@{'/showings/edit/' + ${showingItem.id}}" class="btn btn-warning btn-sm">Modifier</a>
                 <a th:href="@{'/showings/delete/' + ${showingItem.id}}"
                    class="btn btn-danger btn-sm"
                    onclick="return confirm('Voulez-vous vraiment supprimer cette séance ?')">
