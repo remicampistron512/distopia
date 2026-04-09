@@ -1,72 +1,162 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <body>
 <header th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" th:href="@{/}">🎬 Distopia Cinema</a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-              aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- Logo + marque -->
+      <a class="navbar-brand d-flex align-items-center fw-bold" th:href="@{/}">
+        <img th:src="@{/images/logo.png}"
+             alt="Logo Distopia"
+             class="navbar-logo me-2">
+        <span>Distopia Cinema</span>
+      </a>
+
+      <button class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar"
+              aria-expanded="false"
+              aria-label="Afficher ou masquer la navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <!-- Navigation publique -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
           <li class="nav-item">
-            <a class="nav-link active" th:href="@{/}">Accueil</a>
+            <a class="nav-link"
+               th:classappend="${currentPage == 'home'} ? ' active'"
+               th:href="@{/}">
+              Accueil
+            </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/cinemas}">Cinemas</a>
+            <a class="nav-link"
+               th:classappend="${currentPage == 'cinemas'} ? ' active'"
+               th:href="@{/cinemas}">
+              Cinémas
+            </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/movies}">Films</a>
+            <a class="nav-link"
+               th:classappend="${currentPage == 'movies'} ? ' active'"
+               th:href="@{/movies}">
+              Films
+            </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/showings}">A l'affiche</a>
+            <a class="nav-link"
+               th:classappend="${currentPage == 'showings'} ? ' active'"
+               th:href="@{/showings}">
+              À l'affiche
+            </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/bookings}">Réservations</a>
+            <a class="nav-link"
+               th:classappend="${currentPage == 'bookings'} ? ' active'"
+               th:href="@{/bookings}">
+              Réservations
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/users}">Utilisateurs</a>
+
+          <!-- Dropdown admin -->
+          <li class="nav-item dropdown" th:if="${session.loggedUser != null}">
+            <a class="nav-link dropdown-toggle"
+               href="#"
+               id="adminDropdown"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Administration
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-dark shadow"
+                aria-labelledby="adminDropdown">
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'cities/admin'} ? ' active'"
+                   th:href="@{/cities/admin}">
+                  Villes
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'cinemas/admin'} ? ' active'"
+                   th:href="@{/cinemas/admin}">
+                  Cinémas
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'movies/admin'} ? ' active'"
+                   th:href="@{/movies/admin}">
+                  Films
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'showings/admin'} ? ' active'"
+                   th:href="@{/showings/admin}">
+                  Séances
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'bookings/admin'} ? ' active'"
+                   th:href="@{/bookings/admin}">
+                  Réservations
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item"
+                   th:classappend="${currentPage == 'users'} ? ' active'"
+                   th:href="@{/users}">
+                  Utilisateurs
+                </a>
+              </li>
+
+            </ul>
           </li>
+
         </ul>
-        <ul th:if="${session.loggedUser != null}" class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/cinemas/admin}">Cinemas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/movies/admin}">Films</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/showings/admin}">Séances</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/bookings/admin}">Réservations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/cities/admin}">Villes</a>
-          </li>
-        </ul>
-      </div>
-      <div class="d-flex align-items-center">
 
-        <a th:if="${session.loggedUser == null}"
-           class="btn btn-outline-primary me-2"
-           th:href="@{/login}">
-          Se connecter
-        </a>
+        <!-- Zone utilisateur -->
+        <div class="d-flex align-items-lg-center flex-column flex-lg-row gap-2 mt-3 mt-lg-0">
 
-        <div th:if="${session.loggedUser != null}" class="d-flex align-items-center">
-      <span class="me-3">
-        Bonjour <strong th:text="${session.loggedUser.username}"></strong>
-      </span>
-
-          <a class="btn btn-outline-danger"
-             th:href="@{/logout}">
-            Déconnexion
+          <a th:if="${session.loggedUser == null}"
+             class="btn btn-outline-primary"
+             th:href="@{/login}">
+            Se connecter
           </a>
+
+          <div th:if="${session.loggedUser != null}"
+               class="d-flex align-items-lg-center flex-column flex-lg-row gap-2 text-white">
+
+          <span class="small text-light">
+            Bonjour <strong th:text="${session.loggedUser.username}">utilisateur</strong>
+          </span>
+
+            <a class="btn btn-outline-danger btn-sm"
+               th:href="@{/logout}">
+              Déconnexion
+            </a>
+          </div>
+
         </div>
 
       </div>
