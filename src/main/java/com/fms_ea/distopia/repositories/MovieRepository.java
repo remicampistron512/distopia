@@ -14,10 +14,11 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
   List<Movie> findTop6ByOrderByCommunityRatingDesc();
 
   @Query("""
-        select m
-        from Movie m
-        left join fetch m.showings
-        where m.id = :id
-    """)
-  Optional<Movie> findByIdWithShowings(Long id);
+    select distinct m
+    from Movie m
+    left join fetch m.showings s
+    left join fetch s.cinema
+    where m.id = :id
+""")
+  Optional<Movie> findByIdWithShowings(@Param("id") Long id);
 }
