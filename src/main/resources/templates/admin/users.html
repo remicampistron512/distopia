@@ -23,25 +23,18 @@
 
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-dark text-white">
-        <h2 class="h5 mb-0"
-            th:text="${user != null and user.id != null ? 'Modifier un utilisateur' : 'Ajouter un utilisateur'}">
-          Ajouter un utilisateur
-        </h2>
+        <h2 class="h5 mb-0">Ajouter un utilisateur</h2>
       </div>
 
       <div class="card-body">
-        <form th:action="@{/users/save}"
-              th:object="${user}"
-              method="post">
-
-          <input type="hidden" th:field="*{id}">
+        <form th:action="@{/users/save}" method="post">
 
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="username" class="form-label">Nom d'utilisateur</label>
               <input id="username"
+                     name="username"
                      type="text"
-                     th:field="*{username}"
                      class="form-control"
                      required>
             </div>
@@ -49,8 +42,8 @@
             <div class="col-md-4 mb-3">
               <label for="password" class="form-label">Mot de passe</label>
               <input id="password"
+                     name="password"
                      type="password"
-                     th:field="*{password}"
                      class="form-control"
                      required>
             </div>
@@ -58,7 +51,7 @@
             <div class="col-md-4 mb-3">
               <label for="role" class="form-label">Rôle</label>
               <select id="role"
-                      th:field="*{role}"
+                      name="role"
                       class="form-select"
                       required>
                 <option value="">-- Sélectionner un rôle --</option>
@@ -69,9 +62,15 @@
           </div>
 
           <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-            <a th:href="@{/users/admin}" class="btn btn-secondary">Réinitialiser</a>
+            <button type="submit" class="btn btn-primary">
+              Ajouter
+            </button>
+
+            <a th:href="@{/users/admin}" class="btn btn-secondary">
+              Réinitialiser
+            </a>
           </div>
+
         </form>
       </div>
     </div>
@@ -127,6 +126,7 @@
               </td>
             </tr>
             </tbody>
+
           </table>
         </div>
 
