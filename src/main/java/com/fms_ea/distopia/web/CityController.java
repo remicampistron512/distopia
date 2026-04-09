@@ -22,7 +22,9 @@ public class CityController {
   @GetMapping
   public String listCities(Model model) {
     model.addAttribute("cities", cityService.findAll());
+    model.addAttribute("currentPage", "cities");
     return "cities/list";
+
   }
 
   @GetMapping("/view/{id}")
@@ -59,7 +61,7 @@ public class CityController {
       }
     }
     cityService.save(city);
-    return "redirect:/cities";
+    return "redirect:/cities/admin";
   }
 
   @GetMapping("/edit/{id}")
@@ -78,6 +80,7 @@ public class CityController {
   public String adminCities(Model model) {
     model.addAttribute("city", new City());
     model.addAttribute("cities", cityService.findAll());
+    model.addAttribute("currentPage", "admin/cities");
     return "admin/cities";
   }
 }

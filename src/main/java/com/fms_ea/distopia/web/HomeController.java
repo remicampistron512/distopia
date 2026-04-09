@@ -18,6 +18,7 @@ public class HomeController {
     model.addAttribute("cinemas", homeService.getTopCinemas());
     model.addAttribute("cities", homeService.getAllCities());
     model.addAttribute("showings", homeService.getUpcomingShowings());
+    model.addAttribute("currentPage", "home");
     return "home";
   }
 }

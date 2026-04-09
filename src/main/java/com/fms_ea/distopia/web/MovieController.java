@@ -22,6 +22,7 @@ public class MovieController {
   @GetMapping
   public String listMovies(Model model) {
     model.addAttribute("movies", movieService.findAll());
+    model.addAttribute("currentPage", "movies");
     return "movies/list";
   }
 
@@ -86,6 +87,7 @@ public class MovieController {
   public String adminMovies(Model model) {
     model.addAttribute("movie", new Movie());
     model.addAttribute("movies", movieService.findAll());
+    model.addAttribute("currentPage", "admin/movies");
     return "admin/movies";
   }
 }

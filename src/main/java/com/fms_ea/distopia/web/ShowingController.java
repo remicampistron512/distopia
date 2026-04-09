@@ -21,6 +21,7 @@ public class ShowingController {
   @GetMapping
   public String listShowings(Model model) {
     model.addAttribute("showings", showingService.findAll());
+    model.addAttribute("currentPage", "showings");
     return "showings/list";
   }
 
@@ -72,6 +73,7 @@ public class ShowingController {
     model.addAttribute("showings", showingService.findAll());
     model.addAttribute("cinemas", cinemaService.findAll());
     model.addAttribute("movies", movieService.findAll());
+    model.addAttribute("currentPage", "admin/showings");
     return "admin/showings";
   }
 

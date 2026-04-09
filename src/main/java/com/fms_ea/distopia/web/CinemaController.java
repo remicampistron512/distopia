@@ -28,7 +28,7 @@ public class CinemaController {
     } else {
       model.addAttribute("cinemas", cinemaService.findAll());
     }
-
+    model.addAttribute("currentPage", "cinemas");
     return "cinemas/list";
   }
 
@@ -92,6 +92,7 @@ public class CinemaController {
     model.addAttribute("cinema", new Cinema());
     model.addAttribute("cinemas", cinemaService.findAll());
     model.addAttribute("cities", cityService.findAll());
+    model.addAttribute("currentPage", "admin/cinemas");
     return "admin/cinemas";
   }
 }
