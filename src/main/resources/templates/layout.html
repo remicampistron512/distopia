@@ -23,5 +23,15 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function toggleImageInput() {
+    const checkbox = document.getElementById('changeImageToggle');
+    const uploadBlock = document.getElementById('imageUploadBlock');
+
+    if (checkbox && uploadBlock) {
+      uploadBlock.classList.toggle('d-none', !checkbox.checked);
+    }
+  }
+</script>
 </body>
 </html>
