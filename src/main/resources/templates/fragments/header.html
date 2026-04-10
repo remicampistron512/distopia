@@ -59,7 +59,7 @@
               À l'affiche
             </a>
           </li>
-
+          <!--
           <li class="nav-item">
             <a class="nav-link"
                th:classappend="${currentPage == 'bookings'} ? ' active'"
@@ -67,7 +67,7 @@
               Réservations
             </a>
           </li>
-
+          -->
           <!-- Dropdown admin -->
           <li class="nav-item dropdown" th:if="${session.loggedUser != null}">
             <a class="nav-link dropdown-toggle"
@@ -113,7 +113,7 @@
                   Séances
                 </a>
               </li>
-
+              <!--
               <li>
                 <a class="dropdown-item"
                    th:classappend="${currentPage == 'bookings/admin'} ? ' active'"
@@ -121,7 +121,7 @@
                   Réservations
                 </a>
               </li>
-
+              -->
               <li>
                 <a class="dropdown-item"
                    th:classappend="${currentPage == 'users/admin'} ? ' active'"
