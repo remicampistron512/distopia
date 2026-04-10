@@ -55,17 +55,12 @@ Spring Web
 1. Cloner le dépôt :
 
 ```bash id="d17k4r"
-git clone <url-du-projet>
+git clone https://github.com/remicampistron512/distopia
 cd distopia
 ````
 
-2. Créer une base de données MariaDB :
 
-```sql id="ysj5o8"
-CREATE DATABASE distopia;
-```
-
-3. Configurer le fichier `application.properties` :
+2. Configurer le fichier `application.properties` :
 
 ```properties id="x6g2j1"
 spring.datasource.url=jdbc:mariadb://localhost:3306/distopia
@@ -76,13 +71,16 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
-4. Lancer l'application :
+3. Lancer l'application, une base de donnée sera automatiquement créée :
 
 ```bash id="wb7qkf"
 ./mvnw spring-boot:run
 ```
+4. Importer bdd.sql dans la base donnée créée
 
-5. Ouvrir l'application dans le navigateur :
+5. Relancer l'application
+
+6. Ouvrir l'application dans le navigateur :
 
 ```text id="7f6h1k"
 http://localhost:8080
