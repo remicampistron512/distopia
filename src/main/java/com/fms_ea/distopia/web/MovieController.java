@@ -1,4 +1,4 @@
-package com.fms_ea.distopia.controllers;
+package com.fms_ea.distopia.web;
 
 import com.fms_ea.distopia.entities.Movie;
 import com.fms_ea.distopia.services.MovieService;
